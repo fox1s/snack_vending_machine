@@ -5,5 +5,5 @@ if (date.getMonth().toString().length < 10) {
 } else {
     dateMonth = `${date.getMonth() + 1}`;
 }
-const purchaseDate = `${date.getFullYear()}-${dateMonth}-${date.getDate()}`;
-export default purchaseDate;
+export const purchaseDate = `${date.getFullYear()}-${dateMonth}-${date.getDate()}`;
+

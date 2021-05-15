@@ -1,5 +1,5 @@
 import {ADD_CATEGORY, CLEAR_CATEGORY, ADD_ITEM, PURCHASE} from '../action-types';
-// import purchaseDate from './../../logic'
+import {purchaseDate} from '../../logic/PurchaseDate'
 
 const initialState = {
     categoryList: []
@@ -28,16 +28,6 @@ const reducer = (state = initialState, action) => {
             return {...state, categoryList: newCategories}
         }
         case PURCHASE: {//purchase
-            // console.log('purchase')
-            let date = new Date();
-            let dateMonth;
-            if (date.getMonth().toString().length < 10) {
-                dateMonth = `0${date.getMonth() + 1}`;
-            } else {
-                dateMonth = `${date.getMonth() + 1}`;
-            }
-            const purchaseDate = `${date.getFullYear()}-${dateMonth}-${date.getDate()}`;
-
 
             const newCategories = state.categoryList.map(category => {
                 if (category.name === action.payload.name) {
