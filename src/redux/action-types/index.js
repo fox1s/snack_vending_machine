@@ -1,1 +1,1 @@
-export * from './category-list-types'
+export * from './category-list-types';

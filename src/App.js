@@ -1,11 +1,9 @@
 import React from "react";
-import {Link, NavLink, useParams, Switch, Route} from 'react-router-dom';
+import {Link, Route, Switch} from 'react-router-dom';
 import List from "./components/list/List";
 import Home from "./components/home/Home";
 import Editing from "./components/editing/Editing";
 import Statistic from "./components/statistic/Statistic";
-import {useDispatch, useSelector} from "react-redux";
-import {addCategory} from "./redux/action-creators";
 
 export default function App() {
 

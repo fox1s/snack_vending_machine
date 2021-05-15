@@ -1,43 +1,104 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory} from "../../redux/action-creators";
-
+import {addCategory, addItem} from "../../redux/action-creators";
+import styles from './Editing.module.css'
 
 export default function Editing() {
-    const formDiv = React.createRef();
-    const dispatch = useDispatch()
+    const formAddCategory = React.createRef();
+    const formAddItem = React.createRef();
+    const dispatch = useDispatch();
+    const categoryList = useSelector(({categoryList}) => categoryList.categoryList);
+    const [warning, setWarning] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     const onFormSubmit = (e) => {
-        e.preventDefault()
-        console.log(formDiv.current.children[2].value === "")
+        e.preventDefault();
     }
     const handlerAddCategory = () => {
-        dispatch(addCategory({
-            name: formDiv.current.children[0].value,
-            price: formDiv.current.children[1].value,
-            count: (formDiv.current.children[2].value === "" ? 0 : formDiv.current.children[2].value),
-        }))
+        const payload = {
+            name: formAddCategory.current.children[0].value,
+            price: formAddCategory.current.children[1].value,
+            count: (formAddCategory.current.children[2].value === "" ? 0 : formAddCategory.current.children[2].value),
+        }
+
+        if (categoryList.find(category => category.name === payload.name) === undefined) {
+            dispatch(addCategory(payload))
+
+            setWarning(false);
+            setSuccess(true);
+        } else {
+            setWarning(true);
+            setSuccess(false)
+        }
     }
 
+    const handlerAddItem = () => {
+        const payload = {
+            name: formAddItem.current.children[0].value,
+            count: formAddItem.current.children[1].value
+        }
+        console.log(payload)
+        dispatch(addItem(payload))
+    }
 
-    const categoryList = useSelector(({categoryList}) => categoryList.categoryList)
+    const onInputValue = (e) => {
+        setInputValue(e.target.value)
+    }
 
     const handlerAddCategory2 = () => {
         console.log(categoryList)
     }
+    const onSelectChange = (e) => {
+        // console.log(e.target.value)
+        const category = categoryList.find(category => e.target.value === category.name);
+        // console.log(category);
+        if (!!category) {
+            setInputValue(category.count);
+        } else {
+            setInputValue('');
+        }
+
+    }
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setSuccess(false);
+    //     }, 5000)
+    // }, [success])
+
     return (
         <div>
             Add category
-            <form action="" onSubmit={onFormSubmit} ref={formDiv}>
-                name
-                <input type="text"/>
+            <form action="" onSubmit={onFormSubmit} ref={formAddCategory}>
+                Name
+                <input type={'text'}/>
                 Price
-                <input type="text"/>
+                <input type={'number'} step={'any'}/>
                 Count
-                <input type="text" placeholder={0}/>
+                <input type={'number'} placeholder={0}/>
                 <button onClick={handlerAddCategory}>Save</button>
             </form>
+
+            {warning && <div className={styles.warning}>Category already exist!</div>}
+            {success && <div className={styles.success}>Success</div>}
+
             <button onClick={handlerAddCategory2}>show</button>
+            {/*/////////////////////////////////////////////////////////////////////////////////////*/}
+            <br/><br/><br/>
+            Add item
+            <form action="" onSubmit={onFormSubmit} ref={formAddItem}>
+                Name
+                <select onChange={onSelectChange}>
+                    <option>Choose category</option>
+                    {!!categoryList.length && categoryList.map((category, id) => <option
+                        key={id}>{category.name}</option>)}
+                </select>
+
+                Count
+                <input type={"number"} onInput={onInputValue} value={inputValue} placeholder={'Empty'}/>
+                <button onClick={handlerAddItem}>Save</button>
+            </form>
         </div>
     );
 }
