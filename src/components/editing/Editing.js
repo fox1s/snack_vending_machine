@@ -20,6 +20,7 @@ export default function Editing() {
             name: formAddCategory.current.children[0].value,
             price: formAddCategory.current.children[1].value,
             count: (formAddCategory.current.children[2].value === "" ? 0 : formAddCategory.current.children[2].value),
+            purchase: []
         }
 
         if (categoryList.find(category => category.name === payload.name) === undefined) {
@@ -38,7 +39,6 @@ export default function Editing() {
             name: formAddItem.current.children[0].value,
             count: formAddItem.current.children[1].value
         }
-        console.log(payload)
         dispatch(addItem(payload))
     }
 
