@@ -1,5 +1,6 @@
 import React, {useRef, useState} from "react";
 import {useSelector} from "react-redux";
+import {todayDate} from "../../logic/TodayDate";
 
 export default function Statistic() {
     const [monthFlag, setMonthFlag] = useState(false); // buttons logic
@@ -47,6 +48,7 @@ export default function Statistic() {
         })
     }
 
+
     const onInputDayReport = () => {
         setInputDayValue({
             year: dayReportForm.current[0].value,
@@ -54,6 +56,7 @@ export default function Statistic() {
             day: dayReportForm.current[2].day
         })
     }
+
     const onFormSubmitDayReport = (e) => {
         e.preventDefault();
         let dateArr = [];
@@ -64,10 +67,22 @@ export default function Statistic() {
                 })
             }
         })
+        // введена дата
         const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}-${e.target[2].value}`;
-        const filter = dateArr.filter(date => date.date === chosenData)
+
+        let x = dateArr.filter(item => {
+            let date = new Date(item.date);
+            return date >= (new Date(chosenData)) && date <= (new Date(todayDate));
+        })
+        console.log(x)
+
+        const filter = dateArr.filter(date => {
+            return date.date === chosenData
+        })
         setFilterDayDate(filter);
     }
+
+
     return (
         <div>
             <button onClick={onClickMonthReport}>Report for month</button>
@@ -117,7 +132,7 @@ export default function Statistic() {
                     </div>
                     <div>
                         {filterDayDate.map((value, id) => <div
-                            key={id}>{value.name} - {value.count} - {value.date}</div>)}
+                            key={id}>{value.name} - {value.count} - {value.price}$</div>)}
                     </div>
                 </div>
 

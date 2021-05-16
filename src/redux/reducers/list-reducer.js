@@ -1,5 +1,5 @@
 import {ADD_CATEGORY, CLEAR_CATEGORY, ADD_ITEM, PURCHASE} from '../action-types';
-import {purchaseDate} from '../../logic/PurchaseDate'
+import {todayDate} from '../../logic/TodayDate'
 
 const initialState = {
     categoryList: []
@@ -33,9 +33,9 @@ const reducer = (state = initialState, action) => {
                 if (category.name === action.payload.name) {
                     category.count = category.count - 1;
 
-                    let findCategory = category.purchase.find(elem => elem.date === purchaseDate);
+                    let findCategory = category.purchase.find(elem => elem.date === todayDate);
                     if (!findCategory) {
-                        category.purchase.push({date: purchaseDate, count: 1})
+                        category.purchase.push({date: todayDate, count: 1})
                     } else {
                         findCategory.count += 1;
                     }
