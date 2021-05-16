@@ -5,9 +5,12 @@ export default function Statistic() {
     const [monthFlag, setMonthFlag] = useState(false); // buttons logic
     const [dayFlag, setDayFlag] = useState(false);     // buttons logic
     const [filterDate, setFilterDate] = useState([])
+    const [filterDayDate, setFilterDayDate] = useState([])
 
     const [inputValue, setInputValue] = useState({year: '2021', month: '5'}); //react from
+    const [inputDayValue, setInputDayValue] = useState({year: '2021', month: '5', day: '16'}); //react from
     const monthReportForm = useRef(null);
+    const dayReportForm = useRef(null);
     const categoryList = useSelector(({categoryList}) => categoryList.categoryList);
 
     ////////////////////////////////////////// buttons logic
@@ -44,6 +47,27 @@ export default function Statistic() {
         })
     }
 
+    const onInputDayReport = () => {
+        setInputDayValue({
+            year: dayReportForm.current[0].value,
+            month: dayReportForm.current[1].value,
+            day: dayReportForm.current[2].day
+        })
+    }
+    const onFormSubmitDayReport = (e) => {
+        e.preventDefault();
+        let dateArr = [];
+        categoryList.forEach(category => {
+            if (category.purchase.length > 0) {
+                category.purchase.forEach(date => {
+                    dateArr.push({...date, name: category.name, price: +category.price})
+                })
+            }
+        })
+        const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}-${e.target[2].value}`;
+        const filter = dateArr.filter(date => date.date === chosenData)
+        setFilterDayDate(filter);
+    }
     return (
         <div>
             <button onClick={onClickMonthReport}>Report for month</button>
@@ -60,9 +84,10 @@ export default function Statistic() {
                 </form>
                 {filterDate.length > 0 &&
                 <div>
-                    <div>Total: {filterDate.reduce((acc, {price}) => {
-                        return acc + price
-                    }, 0)}$</div>
+                    <div>Total: {filterDate.reduce((acc, value) => {
+                        return acc + (value.price * value.count)
+                    }, 0)}$
+                    </div>
 
 
                     <div>
@@ -76,22 +101,29 @@ export default function Statistic() {
 
             </div>}
 
-            {/*{dayFlag && <div>*/}
-            {/*    Report for day*/}
+            {dayFlag && <div>
+                Report for day
+                <form action="" onSubmit={onFormSubmitDayReport} ref={dayReportForm}>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.year}/>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.month}/>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.day}/>
+                    <button>Find</button>
+                </form>
+                {filterDayDate.length > 0 &&
+                <div>
+                    <div>Total: {filterDayDate.reduce((acc, value) => {
+                        return acc + (value.price * value.count)
+                    }, 0)}$
+                    </div>
+                    <div>
+                        {filterDayDate.map((value, id) => <div
+                            key={id}>{value.name} - {value.count} - {value.date}</div>)}
+                    </div>
+                </div>
 
-            {/*    <form action="" onSubmit={onFormSubmit} ref={monthReportForm}>*/}
-            {/*        <input type={"number"} onInput={onInp} value={inputValue.year}/>*/}
-            {/*        <input type={"number"} onInput={onInp} value={inputValue.month}/>*/}
-            {/*        <input type={"number"} onInput={onInp} value={inputValue.day}/>*/}
-            {/*        <button>Find</button>*/}
-            {/*    </form>*/}
-            {/*    {filterDate.length > 0 &&*/}
-            {/*    <div>*/}
-            {/*        {filterDate.map((value, id) => <div key={id}>{value.name} - {value.count} - {value.date}</div>)}*/}
-            {/*    </div>*/}
-            {/*    }*/}
+                }
 
-            {/*</div>}*/}
+            </div>}
         </div>
     );
 }
