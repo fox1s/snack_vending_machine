@@ -8,14 +8,8 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CATEGORY: {
-            console.log('додати категорію');
-            // if (state.categoryList.indexOf(action.payload) !== -1) {
-            // const newCategoryList = state.categoryList.filter(value => value.id !== action.payload.id)
-            // return {...state, categoryList: newCategoryList}
-            // } else {
             state.categoryList.push(action.payload);
             return {...state, categoryList: [...state.categoryList]};
-            // }
 
         }
         case ADD_ITEM: {
@@ -28,7 +22,6 @@ const reducer = (state = initialState, action) => {
             return {...state, categoryList: newCategories}
         }
         case PURCHASE: {//purchase
-
             const newCategories = state.categoryList.map(category => {
                 if (category.name === action.payload.name) {
                     category.count = category.count - 1;
