@@ -27,7 +27,6 @@ export default function Statistic() {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        // console.log('onFormSubmit')
         let dateArr = [];
         categoryList.forEach(category => {
             if (category.purchase.length > 0) {
@@ -38,6 +37,7 @@ export default function Statistic() {
         })
         const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}`;
         const filter = dateArr.filter(date => date.date.slice(0, 7) === chosenData)
+            .sort((a, b) => a.name > b.name ? 1 : -1);
         setFilterDate(filter);
     }
 
@@ -74,10 +74,10 @@ export default function Statistic() {
             let date = new Date(item.date);
             return date >= (new Date(chosenData)) && date <= (new Date(todayDate));
         })
+            .sort((a, b) => a.name > b.name ? 1 : -1);
 
         setFilterDayDate(filter);
     }
-
 
     return (
         <div>
@@ -89,8 +89,8 @@ export default function Statistic() {
                 Report for month
 
                 <form action="" onSubmit={onFormSubmit} ref={monthReportForm}>
-                    <input type={"number"} onInput={onInp} value={inputValue.year}/>
-                    <input type={"number"} onInput={onInp} value={inputValue.month}/>
+                    <input type={"number"} onInput={onInp} value={inputValue.year} max={todayDate.slice(0, 4)}/>
+                    <input type={"number"} onInput={onInp} value={inputValue.month} max={todayDate.slice(6, 7)}/>
                     <button>Find</button>
                 </form>
                 {filterDate.length > 0 &&
@@ -115,9 +115,12 @@ export default function Statistic() {
             {dayFlag && <div>
                 Report for day
                 <form action="" onSubmit={onFormSubmitDayReport} ref={dayReportForm}>
-                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.year}/>
-                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.month}/>
-                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.day}/>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.year}
+                           max={todayDate.slice(0, 4)}/>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.month}
+                           max={todayDate.slice(6, 7)}/>
+                    <input type={"number"} onInput={onInputDayReport} value={inputDayValue.day}
+                           max={todayDate.slice(8, 10)}/>
                     <button>Find</button>
                 </form>
                 {filterDayDate.length > 0 &&

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory, addItem} from "../../redux/action-creators";
+import {addCategory, addItem, clearCategory} from "../../redux/action-creators";
 import styles from './Editing.module.css'
 
 export default function Editing() {
@@ -99,6 +99,7 @@ export default function Editing() {
                 <input type={"number"} onInput={onInputValue} value={inputValue} placeholder={'Empty'}/>
                 <button onClick={handlerAddItem}>Save</button>
             </form>
+            <button onClick={() =>dispatch(clearCategory())}>Clear</button>
         </div>
     );
 }

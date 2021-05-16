@@ -46,8 +46,8 @@ const reducer = (state = initialState, action) => {
         }
 
         case CLEAR_CATEGORY: {
-            console.log('прибрати категорію')
-            return {...state, categoryList: []}
+            const newCategoryList = state.categoryList.filter(category => category.count > 0);
+            return {...state, categoryList: newCategoryList}
         }
         default: {
             return state;
