@@ -53,7 +53,7 @@ export default function Statistic() {
         setInputDayValue({
             year: dayReportForm.current[0].value,
             month: dayReportForm.current[1].value,
-            day: dayReportForm.current[2].day
+            day: dayReportForm.current[2].value
         })
     }
 
@@ -70,15 +70,11 @@ export default function Statistic() {
         // введена дата
         const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}-${e.target[2].value}`;
 
-        let x = dateArr.filter(item => {
+        let filter = dateArr.filter(item => {
             let date = new Date(item.date);
             return date >= (new Date(chosenData)) && date <= (new Date(todayDate));
         })
-        console.log(x)
 
-        const filter = dateArr.filter(date => {
-            return date.date === chosenData
-        })
         setFilterDayDate(filter);
     }
 
