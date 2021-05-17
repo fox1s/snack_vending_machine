@@ -1,0 +1,37 @@
+.mainBtn > button {
+    width: 300px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.mainBtn {
+    display: flex;
+    justify-content: center;
+
+}
+
+.reportForDay {
+    margin-top: 20px;
+}
+
+.report > span {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+
+    box-sizing: border-box;
+    display: block;
+
+}
+
+.report > form > button{
+    margin-left: 10px;
+}
+
+.input {
+    margin-right: 30px;
+}
+
+.categoryParameters {
+    margin-right: 10px;
+}
