@@ -6,7 +6,7 @@ export default function Statistic() {
     const [monthFlag, setMonthFlag] = useState(false); // buttons logic
     const [dayFlag, setDayFlag] = useState(false);     // buttons logic
     const [filterDate, setFilterDate] = useState([])
-    // const [filterDayDate, setFilterDayDate] = useState([])
+    const [filterDayDate, setFilterDayDate] = useState([])
 
     const [inputValue, setInputValue] = useState({year: todayDate.slice(0, 4), month: todayDate.slice(6, 7)}); //react from
     const [inputDayValue, setInputDayValue] = useState({
@@ -33,16 +33,9 @@ export default function Statistic() {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        let dateArr = [];
-        categoryList.forEach(category => {
-            if (statisticList.length > 0) {
-                statisticList.forEach(date => {
-                    dateArr.push({...date, name: category.name, price: +category.price})
-                })
-            }
-        })
+
         const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}`;
-        const filter = dateArr.filter(date => date.date.slice(0, 7) === chosenData)
+        const filter = statisticList.filter(date => date.date.slice(0, 7) === chosenData)
             .sort((a, b) => a.name > b.name ? 1 : -1);
         setFilterDate(filter);
     }
@@ -86,11 +79,15 @@ export default function Statistic() {
     const onFormSubmitDayReport = (e) => {
         e.preventDefault();
         console.log(statisticList);
-        let dateArr = [];
-        statisticList.forEach(item =>{
+        const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}-${e.target[2].value}`;
 
-        } )
+        let filter = statisticList.filter(item => {
+            let date = new Date(item.date);
+            return date >= (new Date(chosenData)) && date <= (new Date(todayDate));
+        })
+            .sort((a, b) => a.name > b.name ? 1 : -1);
 
+        setFilterDayDate(filter);
     }
 
     return (
@@ -137,14 +134,14 @@ export default function Statistic() {
                            max={todayDate.slice(8, 10)}/>
                     <button>Find</button>
                 </form>
-                {statisticList.length > 0 &&
+                {filterDayDate.length > 0 &&
                 <div>
-                    <div>Total: {statisticList.reduce((acc, value) => {
+                    <div>Total: {filterDayDate.reduce((acc, value) => {
                         return acc + (value.price * value.count)
                     }, 0)}$
                     </div>
                     <div>
-                        {statisticList.map((value, id) => <div
+                        {filterDayDate.map((value, id) => <div
                             key={id}>{value.name} - {value.count} - {value.price}$</div>)}
                     </div>
                 </div>
