@@ -1,0 +1,2 @@
+export const CLEAR_CATEGORY = 'CLEAR_CATEGORY';
+

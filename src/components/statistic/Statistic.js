@@ -10,6 +10,7 @@ export default function Statistic() {
 
     const [inputValue, setInputValue] = useState({year: todayDate.slice(0,4), month: todayDate.slice(6,7)}); //react from
     const [inputDayValue, setInputDayValue] = useState({year: todayDate.slice(0,4), month: todayDate.slice(6,7), day: todayDate.slice(8,10)}); //react from
+
     const monthReportForm = useRef(null);
     const dayReportForm = useRef(null);
     const categoryList = useSelector(({categoryList}) => categoryList.categoryList);

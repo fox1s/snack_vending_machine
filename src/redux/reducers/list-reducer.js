@@ -1,9 +1,13 @@
-import {ADD_CATEGORY, CLEAR_CATEGORY, ADD_ITEM, PURCHASE} from '../action-types';
+import {ADD_CATEGORY, ADD_ITEM, PURCHASE} from '../action-types';
 import {todayDate} from '../../logic/TodayDate'
 
+
 const initialState = {
-    categoryList: []
+    categoryList: [],
+    statisticList: []
 }
+
+// const statisticList = useSelector(({statisticList}) => statisticList.statisticList);
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -22,13 +26,16 @@ const reducer = (state = initialState, action) => {
             return {...state, categoryList: newCategories}
         }
         case PURCHASE: {//purchase
+            console.log(state)
             const newCategories = state.categoryList.map(category => {
                 if (category.name === action.payload.name) {
                     category.count = category.count - 1;
-
-                    let findCategory = category.purchase.find(elem => elem.date === todayDate);
+                    // console.log(category)
+                    let findCategory = state.statisticList.find(elem => elem.date === todayDate);
+                    // let findCategory = category.purchase.find(elem => elem.date === todayDate);
                     if (!findCategory) {
-                        category.purchase.push({date: todayDate, count: 1})
+                        let newStatistic = state.statisticList;
+                        newStatistic.push({name: category.name, date: todayDate, count: 1});
                     } else {
                         findCategory.count += 1;
                     }
@@ -38,10 +45,12 @@ const reducer = (state = initialState, action) => {
             return {...state, categoryList: newCategories}
         }
 
-        case CLEAR_CATEGORY: {
-            const newCategoryList = state.categoryList.filter(category => category.count > 0);
-            return {...state, categoryList: newCategoryList}
-        }
+        // case CLEAR_CATEGORY: {
+        //     const newCategoryList = state.categoryList.filter(category => category.count > 0);
+        //     console.log(state.categoryList)
+        //     console.log(newCategoryList)
+        //     return {...state, categoryList: newCategoryList}
+        // }
         default: {
             return state;
         }

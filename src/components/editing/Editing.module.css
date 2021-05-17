@@ -5,10 +5,28 @@
 
 }
 
-.categoryParameters{
+.categoryParameters {
     margin-right: 10px;
 }
 
 .input {
     margin-right: 30px;
+}
+
+.addItemCategory {
+    margin-top: 30px;
+}
+
+button {
+    color: #9d2a2a;
+    background-color: white;
+    border-radius: 2px;
+    border: 2px solid #9d2a2a;
+    width: 100px;
+    height: 30px;
+}
+
+button:active {
+    transform: scale(0.95);
+    background-color: #cb4f4f;
 }
