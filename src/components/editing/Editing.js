@@ -81,9 +81,7 @@ export default function Editing() {
                 <button onClick={handlerAddCategory}>Save</button>
             </form>
 
-            {/*{warning && <div className={styles.warning}>Category already exist!</div>}*/}
             {warning && <Alert class_name={'warning'} text={'Category already exist or the name written wrong!'}/>}
-            {/*{success && <div className={styles.success}>Success</div>}*/}
             {success && <Alert class_name={'success'} text={'Success!'}/>}
 
             <button onClick={handlerAddCategory2}>show</button>

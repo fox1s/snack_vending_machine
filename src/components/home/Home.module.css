@@ -1,0 +1,17 @@
+.instruction {
+    font-size: 25px;
+
+    display: flex;
+    flex-direction: column;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.instruction > div {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    color: #9d2a2a;
+
+    margin-bottom: 40px;
+}
