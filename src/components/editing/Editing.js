@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory, addItem, clearCategory} from "../../redux/action-creators";
+import {addCategory, addItem} from "../../redux/action-creators";
 import styles from './Editing.module.css'
 import Alert from "../alerts/Alert";
 
@@ -124,7 +124,7 @@ export default function Editing() {
             <div>
                 <div className={[styles.addItemCategory, styles.nameOfCategory].join(' ')}>Clear</div>
                 <span className={styles.categoryParameters}>Stop serving all snack categories that don’t have items for sale</span>
-                <button onClick={() => dispatch(clearCategory())}>Clear</button>
+                {/*<button onClick={() => dispatch(clearCategory())}>Clear</button>*/}
             </div>
 
             <div>
