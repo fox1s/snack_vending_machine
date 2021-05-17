@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory, addItem, clearCategory} from "../../redux/action-creators";
 import styles from './Editing.module.css'
+import Alert from "../alerts/Alert";
 
 export default function Editing() {
     const formAddCategory = React.createRef();
@@ -23,7 +24,7 @@ export default function Editing() {
             purchase: []
         }
 
-        if (categoryList.find(category => category.name === payload.name) === undefined) {
+        if (categoryList.find(category => category.name === payload.name) === undefined && !!payload.name) {
             dispatch(addCategory(payload))
 
             setWarning(false);
@@ -80,8 +81,10 @@ export default function Editing() {
                 <button onClick={handlerAddCategory}>Save</button>
             </form>
 
-            {warning && <div className={styles.warning}>Category already exist!</div>}
-            {success && <div className={styles.success}>Success</div>}
+            {/*{warning && <div className={styles.warning}>Category already exist!</div>}*/}
+            {warning && <Alert class_name={'warning'} text={'Category already exist or the name written wrong!'}/>}
+            {/*{success && <div className={styles.success}>Success</div>}*/}
+            {success && <Alert class_name={'success'} text={'Success!'}/>}
 
             <button onClick={handlerAddCategory2}>show</button>
             {/*/////////////////////////////////////////////////////////////////////////////////////*/}
