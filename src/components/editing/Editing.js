@@ -18,9 +18,9 @@ export default function Editing() {
     }
     const handlerAddCategory = () => {
         const payload = {
-            name: formAddCategory.current.children[0].value,
-            price: formAddCategory.current.children[1].value,
-            count: (formAddCategory.current.children[2].value === "" ? 0 : formAddCategory.current.children[2].value),
+            name: formAddCategory.current[0].value,
+            price: formAddCategory.current[1].value,
+            count: (formAddCategory.current[2].value === "" ? 0 : formAddCategory.current[2].value),
             purchase: []
         }
 
@@ -37,8 +37,8 @@ export default function Editing() {
 
     const handlerAddItem = () => {
         const payload = {
-            name: formAddItem.current.children[0].value,
-            count: formAddItem.current.children[1].value
+            name: formAddItem.current[0].value,
+            count: formAddItem.current[1].value
         }
         dispatch(addItem(payload))
     }
@@ -72,12 +72,14 @@ export default function Editing() {
         <div>
             Add category
             <form action="" onSubmit={onFormSubmit} ref={formAddCategory}>
-                Name
-                <input type={'text'}/>
-                Price
-                <input type={'number'} step={'any'}/>
-                Count
-                <input type={'number'} placeholder={0}/>
+                <span className={styles.categoryParameters}>Name</span>
+                <input className={styles.input} type={'text'}/>
+
+                <span className={styles.categoryParameters}>Price</span>
+                <input className={styles.input} type={'number'} step={'any'}/>
+
+                <span className={styles.categoryParameters}>Count</span>
+                <input className={styles.input} type={'number'} placeholder={0}/>
                 <button onClick={handlerAddCategory}>Save</button>
             </form>
 
@@ -100,7 +102,7 @@ export default function Editing() {
                 <input type={"number"} onInput={onInputValue} value={inputValue} placeholder={'Empty'}/>
                 <button onClick={handlerAddItem}>Save</button>
             </form>
-            <button onClick={() =>dispatch(clearCategory())}>Clear</button>
+            <button onClick={() => dispatch(clearCategory())}>Clear</button>
         </div>
     );
 }
