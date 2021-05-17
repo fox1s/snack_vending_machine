@@ -8,12 +8,11 @@ export default function Statistic() {
     const [filterDate, setFilterDate] = useState([])
     const [filterDayDate, setFilterDayDate] = useState([])
 
-    const [inputValue, setInputValue] = useState({year: '2021', month: '5'}); //react from
-    const [inputDayValue, setInputDayValue] = useState({year: '2021', month: '5', day: '16'}); //react from
+    const [inputValue, setInputValue] = useState({year: todayDate.slice(0,4), month: todayDate.slice(6,7)}); //react from
+    const [inputDayValue, setInputDayValue] = useState({year: todayDate.slice(0,4), month: todayDate.slice(6,7), day: todayDate.slice(8,10)}); //react from
     const monthReportForm = useRef(null);
     const dayReportForm = useRef(null);
     const categoryList = useSelector(({categoryList}) => categoryList.categoryList);
-
     ////////////////////////////////////////// buttons logic
     const onClickMonthReport = () => {
         setMonthFlag(true);
