@@ -19,6 +19,7 @@ export default function Statistic() {
     const monthReportForm = useRef(null);
     const dayReportForm = useRef(null);
     const statisticList = useSelector(({categoryList}) => categoryList.statisticList);
+
     ////////////////////////////////////////// buttons logic
     const onClickMonthReport = () => {
         setMonthFlag(true);
@@ -30,22 +31,13 @@ export default function Statistic() {
     }
     ////////////////////////////////////////////////////////////
 
-    const onFormSubmit = (e) => {
-        e.preventDefault();
 
-        const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}`;
-        const filter = statisticList.filter(date => date.date.slice(0, 7) === chosenData)
-            .sort((a, b) => a.name > b.name ? 1 : -1);
-        setFilterDate(filter);
-    }
-
-    const onInp = () => {
+    const onInputMonthReport = () => {
         setInputValue({
             year: monthReportForm.current[0].value,
             month: monthReportForm.current[1].value,
         })
     }
-
 
     const onInputDayReport = () => {
         setInputDayValue({
@@ -53,6 +45,15 @@ export default function Statistic() {
             month: dayReportForm.current[1].value,
             day: dayReportForm.current[2].value
         })
+    }
+
+    const onFormSubmitMonthReport = (e) => {
+        e.preventDefault();
+
+        const chosenData = `${e.target[0].value}-${e.target[1].value.length === 1 ? '0' + e.target[1].value : e.target[1].value}`;
+        const filter = statisticList.filter(date => date.date.slice(0, 7) === chosenData)
+            .sort((a, b) => a.name > b.name ? 1 : -1);
+        setFilterDate(filter);
     }
 
     const onFormSubmitDayReport = (e) => {
@@ -78,14 +79,15 @@ export default function Statistic() {
 
             {monthFlag &&
             <div className={styles.report}>
-               <span>Report for month</span>
+                <span>Report for month</span>
 
-                <form action="" onSubmit={onFormSubmit} ref={monthReportForm}>
+                <form action="" onSubmit={onFormSubmitMonthReport} ref={monthReportForm}>
                     <span className={styles.categoryParameters}>Year</span>
-                    <input className={styles.input} type={"number"} onInput={onInp} value={inputValue.year}
+                    <input className={styles.input} type={"number"} onInput={onInputMonthReport} value={inputValue.year}
                            max={todayDate.slice(0, 4)}/>
                     <span className={styles.categoryParameters}>Month</span>
-                    <input className={styles.input} type={"number"} onInput={onInp} value={inputValue.month}
+                    <input className={styles.input} type={"number"} onInput={onInputMonthReport}
+                           value={inputValue.month}
                            max={todayDate.slice(6, 7)}/>
                     <button className={styles.buttons}>Find</button>
                 </form>
@@ -125,14 +127,26 @@ export default function Statistic() {
                     <button className={styles.buttons}>Find</button>
                 </form>
                 {filterDayDate.length > 0 &&
-                <div>
-                    <div>Total: {filterDayDate.reduce((acc, value) => {
+                <div className={styles.infoReport}>
+                    <div className={styles.totalEarning}>Total: {filterDayDate.reduce((acc, value) => {
                         return acc + (value.price * value.count)
                     }, 0)}$
                     </div>
+                    <hr/>
                     <div>
-                        {filterDayDate.map((value, id) => <div
-                            key={id}>{value.name} - {value.count} - {value.price}$</div>)}
+                        <b>
+                            <div className={styles.reportDiv}>
+                                <div>Name</div>
+                                <div>number of purchases</div>
+                                <div>Price $</div>
+                            </div>
+                        </b>
+                        {filterDayDate.map((value, id) => <div className={styles.reportDiv}
+                                                               key={id}>
+                            <div className={styles.reportItems}>{value.name}</div>
+                            <div className={styles.reportItems}>{value.count}</div>
+                            <div className={styles.reportItems}>{value.price}$</div>
+                        </div>)}
                     </div>
                 </div>
 

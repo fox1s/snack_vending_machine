@@ -23,7 +23,6 @@ export default function Editing() {
             name: formAddCategory.current[0].value,
             price: formAddCategory.current[1].value,
             count: (formAddCategory.current[2].value === "" ? 0 : formAddCategory.current[2].value)
-            // purchase: []
         }
 
         if (categoryList.find(category => category.name === payload.name) === undefined && !!payload.name) {
@@ -67,11 +66,11 @@ export default function Editing() {
 
     }
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setSuccess(false);
-    //     }, 5000)
-    // }, [success])
+    useEffect(() => {
+        setTimeout(() => {
+            setSuccess({...success, addCategory: false, addItem: false});
+        }, 5000)
+    }, [success])
 
     return (
         <div>
@@ -126,14 +125,6 @@ export default function Editing() {
                 <span className={styles.categoryParameters}>Stop serving all snack categories that don’t have items for sale</span>
                 <button onClick={() => dispatch(clearCategory())}>Clear</button>
             </div>
-
-            <div>
-                {warning.clear &&
-                <Alert class_name={'warning'} text={'something go wrong!'}/>}
-                {success.clear &&
-                <Alert class_name={'success'} text={'Success!'}/>}
-            </div>
-
 
         </div>
     );

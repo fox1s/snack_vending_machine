@@ -35,3 +35,22 @@
 .categoryParameters {
     margin-right: 10px;
 }
+
+.infoReport{
+    margin-top: 10px;
+}
+
+.totalEarning{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.reportDiv{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.reportDiv>div{
+    width: 250px;
+    font-size: 20px;
+}
